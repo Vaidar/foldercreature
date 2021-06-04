@@ -12,7 +12,8 @@ using std::string;
 class Creature {
     private:
         string name;
-        string path;
+        string currentDir;
+        string fullPath;
         std::fstream self;
         std::list<string> nearbyFiles;
         std::list<string> nearbyFolders;
@@ -21,13 +22,12 @@ class Creature {
         Creature(string name, string path);
         string getName();
         string getPath();
-        //std::fstream getSelf();
+        //std::fstream getSelf(); hur?
         void move(string destination);
         void eat(string file);
 
     private:
-        void getNearbyFiles(std::list<string> nearbyFiles);
-        void getNearbyFolders(std::list<string> nearbyFolders);
+        void getNearbyFilesAndFolders();
 };
 
 #endif

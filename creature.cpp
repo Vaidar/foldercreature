@@ -2,7 +2,12 @@
 
 Creature::Creature(std::string name, std::string path) {
     this->name = name;
-    this->path = path;
+    this->currentDir = path;
+    this->fullPath = path.append("\\").append(name).append(".creature");
+
+    // Create file and add name
+    this->self.open(this->fullPath, std::fstream::out);
+    this->self << name << std::endl;
 }
 
 string Creature::getName() {
@@ -10,28 +15,25 @@ string Creature::getName() {
 }
 
 string Creature::getPath() {
-    return this->path;
+    return this->currentDir;
 }
 
-// std::fstream Creature::getSelf() {
-//     return this->self;
-// }
-
 void Creature::move(string destination) {
-    getNearbyFiles(this->nearbyFiles);
+    //this->self.close();
+    std::filesystem::rename(this->fullPath, "F:\\Hackerfolder\\Cpp-things\\foldercreature\\Cage\\1\\1-2");
+    getNearbyFilesAndFolders();
 }
 
 void Creature::eat(string file) {
 
 }
 
-void Creature::getNearbyFiles(std::list<string> nearbyFiles) {
-    for (const auto & entry : std::filesystem::directory_iterator(this->path)) {
-        std::cout << entry.path() << std::endl;
-        nearbyFiles.push_back(entry.path().string());
+void Creature::getNearbyFilesAndFolders() {
+    for (const auto & entry : std::filesystem::directory_iterator(this->currentDir)) {
+        if (entry.is_directory()) {
+            this->nearbyFolders.push_back(entry.path().string());
+        } else {
+            this->nearbyFiles.push_back(entry.path().string());
+        }
     }
-}
-
-void Creature::getNearbyFolders(std::list<string> nearbyFolders) {
-
 }
