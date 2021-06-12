@@ -9,36 +9,56 @@ Creature::Creature(std::string name, std::string path) {
 
     // Create file and add name
     this->self.open(this->fullPath, std::fstream::out);
-    this->self << name << std::endl;
-    this->self << this->currentDir << std::endl;
-}
-
-string Creature::getName() {
-    return this->name;
-}
-
-string Creature::getPath() {
-    return this->currentDir;
-}
-
-// När den flyttas raderas allt innehåll i filen >:(
-void Creature::move(string destination) {
-    this->self.close();
-
-    string newFullPath = this->currentDir;
-    newFullPath.append("/").append(destination).append("/").append(this->name).append(".creature");
-    
-    std::filesystem::rename(this->fullPath, newFullPath);
-    
-    this->fullPath = newFullPath;
-    this->self.open(this->fullPath, std::fstream::out);
     if (!this->self.is_open()) {
         std::cout << "Failed to create file. :(" << std::endl;
     }
 
-    this->currentDir = this->currentDir.append("/").append(destination);
+    getNearbyFilesAndFolders();
+
+    this->self << name << std::endl;
     this->self << this->currentDir << std::endl;
-    
+
+    srand(time(NULL));
+}
+
+void Creature::move() {
+    this->self.close();
+    string destination = chooseNewDestination();
+    if (destination == "") {
+        return;
+    }
+
+    string newFullPath = this->currentDir;
+
+    // Step up or down
+    if (destination == "..") {
+        size_t pos = this->currentDir.find_last_of("/");
+        size_t length = this->currentDir.length();
+
+        // Remove last dir from path
+        this->currentDir.erase(pos, length - pos);
+
+        newFullPath = this->currentDir;
+        newFullPath.append("/").append(this->name).append(".creature");
+    } else {
+        newFullPath.append("/").append(destination).append("/").append(this->name).append(".creature");        
+        this->currentDir = this->currentDir.append("/").append(destination);
+    }
+
+    // Move the creature
+    std::filesystem::rename(this->fullPath, newFullPath);
+    this->fullPath = newFullPath;
+
+    // Reopen the file at the new location
+    this->self.open(this->fullPath, std::fstream::out | std::fstream::app);
+    if (!this->self.is_open()) {
+        std::cout << "Failed to reopen file. :(" << std::endl;
+    }
+
+    this->nearbyFiles.clear();
+    this->nearbyFolders.clear();
+
+    this->self << this->currentDir << std::endl;    
     getNearbyFilesAndFolders();
 }
 
@@ -59,6 +79,28 @@ void Creature::getNearbyFilesAndFolders() {
                 this->nearbyFiles.push_back(entry.path().string());
             }
         }
+    }
+}
+
+string Creature::chooseNewDestination() {
+    int index = rand() % (this->nearbyFolders.size() + 1);
+
+    // If index same as size, move up a step else go to index in list.
+    if (index == this->nearbyFolders.size()) {
+        // If at top of cage and neighbour list is empty dont move.
+        if (this->currentDir == "./Cage") { // HÅRDKODAD BUR
+            return "";
+        } else {
+            return "..";
+        }
+    } else {
+        auto front = this->nearbyFolders.begin();
+        std::advance(front, index);
+        string newPath = *front;
+
+        // Remove everything from the path except for the name of the directory.
+        newPath.erase(0, this->currentDir.size() + 1);
+        return newPath;
     }
 }
 
