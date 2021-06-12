@@ -25,6 +25,7 @@ class Creature {
         //std::fstream getSelf(); hur?
         void move(string destination);
         void eat(string file);
+        void kill();
 
     private:
         void getNearbyFilesAndFolders();

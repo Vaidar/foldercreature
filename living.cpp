@@ -6,8 +6,9 @@
 
 int main(void) {
     std::string name = "oogabooga";
-    std::string path = "F:\\Hackerfolder\\Cpp-things\\foldercreature\\Cage\\1";
+    std::string path = "./Cage/1";
     Creature c(name, path);
     c.move("..");
+    //c.kill();
     return 0;
 }
