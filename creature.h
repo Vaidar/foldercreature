@@ -1,6 +1,7 @@
 #ifndef CREATURE
 #define CREATURE
 
+#include "life.h"
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -9,11 +10,10 @@
 
 using std::string;
 
-class Creature {
+class Creature: public Life {
     private:
-        string name;
-        string currentDir;
-        string fullPath;
+        string currentDir; // TODO: Borde dessa två paths vara av typen path (eller liknande) istället för string?
+
         std::fstream self;
         std::list<string> nearbyFiles;
         std::list<string> nearbyFolders;
