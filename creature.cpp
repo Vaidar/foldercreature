@@ -1,9 +1,7 @@
 #include "creature.h"
 
 Creature::Creature(std::string name, std::string path) : Life(name, path) {
-    this->currentDir = path;
-
-    string temp = path;
+    std::string temp = path;
     this->fullPath = temp.append("/").append(this->name).append(".creature");
 
     // Create file
@@ -12,27 +10,25 @@ Creature::Creature(std::string name, std::string path) : Life(name, path) {
         std::cout << "Failed to create file. :(" << std::endl;
     }
 
-    getNearbyFilesAndFolders();
-
     this->self << name << std::endl;
     this->self << this->currentDir << std::endl;
 
+    getNearbyFilesAndFolders();
     srand(time(NULL));
 }
 
 void Creature::move() { // TODO: Flytta över mesta av koden här till ny fysik/filehandler klass.
     this->self.close();
-    string destination = chooseNewDestination();
+    std::string destination = chooseNewDestination();
     if (destination == "") {
         return;
     }
 
     // Get the path to the new directory
-    string newFullPath = getNewPath(this->currentDir, destination);
+    std::string newFullPath = getNewPath(this->currentDir, destination);
     this->currentDir = newFullPath;
 
     newFullPath.append("/").append(this->name).append(".creature");
-    std::cout << newFullPath << std::endl;
 
     // Move the creature
     std::filesystem::rename(this->fullPath, newFullPath);
@@ -51,12 +47,12 @@ void Creature::move() { // TODO: Flytta över mesta av koden här till ny fysik/
     getNearbyFilesAndFolders();
 }
 
-void Creature::eat(string file) {
+void Creature::eat(std::string file) {
 
 }
 
 void Creature::getNearbyFilesAndFolders() {
-    string tempName = this->name;
+    std::string tempName = this->name;
     tempName.append(".creature");
 
     for (const auto & entry : std::filesystem::directory_iterator(this->currentDir)) {        
@@ -71,7 +67,7 @@ void Creature::getNearbyFilesAndFolders() {
     }
 }
 
-string Creature::chooseNewDestination() {
+std::string Creature::chooseNewDestination() {
     int index = rand() % (this->nearbyFolders.size() + 1);
 
     // If index same as size, move up a step else go to index in list.
@@ -85,15 +81,10 @@ string Creature::chooseNewDestination() {
     } else {
         auto front = this->nearbyFolders.begin();
         std::advance(front, index);
-        string newPath = *front;
+        std::string newPath = *front;
 
         // Remove everything from the path except for the name of the directory.
-        newPath.erase(0, this->currentDir.size() + 1);
+        newPath.erase(0, this->currentDir.string().size() + 1);
         return newPath;
     }
-}
-
-void Creature::kill() {
-    this->self.close();
-    std::remove(this->fullPath.c_str());
 }

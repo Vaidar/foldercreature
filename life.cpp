@@ -3,7 +3,15 @@
 
 Life::Life(std::string name, std::filesystem::path path) {
     this->name = name;
-    this->fullPath = path;
+    this->currentDir = path;
+}
+
+std::string Life::getName() {
+    return this->name;
+}
+
+std::string Life::getPath() {
+    return this->currentDir;
 }
 
 std::string Life::getNewPath(std::string origin, std::string destination) {
@@ -26,4 +34,9 @@ std::string Life::getNewPath(std::string origin, std::string destination) {
             return "";
         }
     }
+}
+
+void Life::kill() {
+    this->self.close();
+    std::remove(this->fullPath.c_str());
 }

@@ -2,24 +2,15 @@
 #define CREATURE
 
 #include "life.h"
-#include <iostream>
-#include <fstream>
-#include <filesystem>
-#include <string>
 #include <list>
-
-using std::string;
 
 class Creature: public Life {
     private:
-        string currentDir; // TODO: Borde dessa två paths vara av typen path (eller liknande) istället för string?
-
-        std::fstream self;
-        std::list<string> nearbyFiles;
-        std::list<string> nearbyFolders;
+        std::list<std::string> nearbyFiles;
+        std::list<std::string> nearbyFolders;
 
     public:
-        Creature(string name, string path);
+        Creature(std::string name, std::string path);
         
         /**
          * Moves the creature one directory further up or down the tree.
@@ -27,12 +18,7 @@ class Creature: public Life {
          * If the creature should move a step up the tree the destination should be "..".
          */
         void move();
-        void eat(string file);
-
-        /**
-         * Kills the creature. Closes the fstream and removes the .creature file. 
-         */
-        void kill();
+        void eat(std::string file);
 
     private:
         /**
@@ -45,9 +31,9 @@ class Creature: public Life {
          * Randomly selects neighbouring directory to move the creature to inside its cage.
          * 
          * @return Either the name of the directory to move the creature to, ".." representing
-         *         moving the creature one directory up or an empty string if no option was found.
+         *         moving the creature one directory up or an empty std::string if no option was found.
          */
-        string chooseNewDestination();
+        std::string chooseNewDestination();
 };
 
 #endif
