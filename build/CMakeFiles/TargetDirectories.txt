@@ -1,0 +1,3 @@
+C:/Users/vidar/Documents/Hackerfolder/Cpp-things/folderecosystem/build/CMakeFiles/rebuild_cache.dir
+C:/Users/vidar/Documents/Hackerfolder/Cpp-things/folderecosystem/build/CMakeFiles/Test.dir
+C:/Users/vidar/Documents/Hackerfolder/Cpp-things/folderecosystem/build/CMakeFiles/edit_cache.dir
