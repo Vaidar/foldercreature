@@ -17,6 +17,11 @@ Creature::Creature(std::string name, std::string path) : Life(name, path) {
     srand(time(NULL));
 }
 
+void Creature::doAction() {
+    std::cout << "Is it overwritten???" << std::endl;
+    this->move();
+}
+
 void Creature::move() { // TODO: Flytta över mesta av koden här till ny fysik/filehandler klass.
     this->self.close();
     std::string destination = chooseNewDestination();

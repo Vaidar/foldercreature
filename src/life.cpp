@@ -14,6 +14,11 @@ std::string Life::getPath() {
     return this->currentDir.string();
 }
 
+// Override this method in all life subclasses.
+void Life::doAction() {
+    std::cout << this->name << " did its action." << std::endl;
+}
+
 std::string Life::getNewPath(std::filesystem::path origin, std::string destination) {
     std::filesystem::path test = origin;
 

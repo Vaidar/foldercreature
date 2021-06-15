@@ -7,4 +7,11 @@ project(folderecosystem)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_executable(Test src/life.cpp src/creature.cpp src/grass.cpp src/grassfield.cpp src/ecosystem.cpp src/living.cpp)
+# add_executable(Test src/life.cpp src/creature.cpp src/grass.cpp src/grassfield.cpp src/ecosystem.cpp src/living.cpp)
+
+file(GLOB SOURCES
+    include/*.h
+    src/*.cpp
+)
+
+add_executable(folderecosystem ${SOURCES})

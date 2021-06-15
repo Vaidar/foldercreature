@@ -16,15 +16,23 @@ class EcoSystem {
         // topDir represents the top of the cage, nothing outside this dir
         std::filesystem::path topDir;
         int time;
-        std::list<Life> lifeForms;
+        std::list<Life*> lifeForms;
 
     public:
         EcoSystem(std::filesystem::path topDir);
 
         /**
          * The method for moving the ecosystem forward by one tick (1 time unit).
+         * Runs the doAction() method on every life form in the lifeForms list.
          */
         void tick();
+
+        /**
+         * Adds the given life form to the lifeForms list.
+         * 
+         * @param life Pointer to the life form to add to the list.
+         */
+        void addLifeFormToList(Life* life);
 };
 
 #endif

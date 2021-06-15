@@ -12,3 +12,7 @@ Grass::Grass(std::string name, std::string path) : Life(name, path) {
     this->self << this->name << std::endl;
     this->self << this->currentDir << std::endl;
 }
+
+void Grass::doAction() {
+    std::cout << "Grass override!" << std::endl;
+}

@@ -12,15 +12,17 @@ int main(void) {
     std::string path = "./Cage/1";
     
     EcoSystem* ecoSystem = new EcoSystem(path);
-    Creature c(name, path);
-    Grass g("igelbigel", path);
+
+    Creature* c = new Creature(name, path);
+    Grass* g = new Grass("igelbigel", path);
+
+    ecoSystem->addLifeFormToList(c);
 
     for (int i = 0; i < 100; i++) {
         ecoSystem->tick();
-        c.move();
     }
 
-    std::cout << c.getName() << " is in: " << c.getPath() << std::endl;
+    std::cout << c->getName() << " is in: " << c->getPath() << std::endl;
 
     //c.kill();
     return 0;

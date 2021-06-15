@@ -9,13 +9,12 @@ void EcoSystem::tick() {
     this->time++;
 
     if (this->lifeForms.size() > 0) {
-        for (std::list<Life>::iterator it = this->lifeForms.begin(); it != this->lifeForms.end(); ++it){
-            //it->doAction(); // FIX: UNDEFINED REFERENCE ajg inte fortstor :((
+        for (std::list<Life*>::iterator it = this->lifeForms.begin(); it != this->lifeForms.end(); ++it){
+            (*it)->doAction();
         }
-
-        // FIX: Varför funkar inte den här typen av loop?
-        // for (auto& i : this->lifeForms) {
-        //     i->doAction();
-        // }
     }
+}
+
+void EcoSystem::addLifeFormToList(Life* life) {
+    this->lifeForms.push_back(life);
 }

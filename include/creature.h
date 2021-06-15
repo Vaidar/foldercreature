@@ -11,16 +11,19 @@ class Creature: public Life {
 
     public:
         Creature(std::string name, std::string path);
-        
+
+        virtual void doAction() override;
+
+    private:
         /**
          * Moves the creature one directory further up or down the tree.
          * The parameter destination is the name of the directory to move the creature to.
          * If the creature should move a step up the tree the destination should be "..".
          */
         void move();
+        
         void eat(std::string file);
 
-    private:
         /**
          * Finds all the files and folders in the current directory
          * and adds them to the creatures lists for each type.
