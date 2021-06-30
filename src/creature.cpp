@@ -1,16 +1,7 @@
 #include "../include/creature.h"
 
-Creature::Creature(std::string name, std::string path) : Life(name, path) {
-    std::string temp = path;
-    this->fullPath = temp.append("/").append(this->name).append(".creature");
-
-    // Create file
-    this->self.open(this->fullPath, std::fstream::out);
-    if (!this->self.is_open()) {
-        std::cout << "Failed to create file. :(" << std::endl;
-    }
-
-    this->self << name << std::endl;
+Creature::Creature(std::string name, LifeFormType type, std::string path) : Life(name, type, path) {
+    this->self << this->name << std::endl;
     this->self << this->currentDir << std::endl;
 
     getNearbyFilesAndFolders();
@@ -18,7 +9,7 @@ Creature::Creature(std::string name, std::string path) : Life(name, path) {
 }
 
 void Creature::doAction() {
-    std::cout << "Is it overwritten???" << std::endl;
+    std::cout << "Creature override!!!" << std::endl;
     this->move();
 }
 
@@ -33,7 +24,7 @@ void Creature::move() { // TODO: Flytta över mesta av koden här till ny fysik/
     std::string newFullPath = getNewPath(this->currentDir, destination);
     this->currentDir = newFullPath;
 
-    newFullPath.append("/").append(this->name).append(".creature");
+    newFullPath.append("/").append(this->name).append(getFileExtensionFromLifeFormType());
 
     // Move the creature
     std::filesystem::rename(this->fullPath, newFullPath);
@@ -52,13 +43,14 @@ void Creature::move() { // TODO: Flytta över mesta av koden här till ny fysik/
     getNearbyFilesAndFolders();
 }
 
-void Creature::eat(std::string file) {
-
+void Creature::eat() {
+    throw "Override Creature::eat()";
 }
 
+// TODO: Den här verkar hårdkodad efter .creature. Fixa det!
 void Creature::getNearbyFilesAndFolders() {
     std::string tempName = this->name;
-    tempName.append(".creature");
+    tempName.append(getFileExtensionFromLifeFormType());
 
     for (const auto & entry : std::filesystem::directory_iterator(this->currentDir)) {        
         if (entry.is_directory()) {

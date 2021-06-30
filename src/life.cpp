@@ -1,9 +1,20 @@
 #include "../include/life.h"
 #include "../include/ecosystem.h"
 
-Life::Life(std::string name, std::filesystem::path path) {
+Life::Life(std::string name, LifeFormType type, std::filesystem::path path) {
     this->name = name;
+    this->type = type;
     this->currentDir = path;
+
+    std::string temp = path;
+    std::string fileExtension = getFileExtensionFromLifeFormType();
+    this->fullPath = temp.append("/").append(this->name).append(fileExtension);
+
+    // Create file
+    this->self.open(this->fullPath, std::fstream::out);
+    if (!this->self.is_open()) {
+        std::cout << "Failed to create file. :(" << std::endl;
+    }
 }
 
 std::string Life::getName() {
@@ -45,4 +56,15 @@ void Life::kill() {
     this->self.close();
     std::string temp = this->fullPath.string(); // BUG: Varför krävs det här mellansteget wtf
     remove(temp.c_str());
+}
+
+std::string Life::getFileExtensionFromLifeFormType() {
+    switch (this->type) {
+        case Grass:
+            return ".grass";
+        case GrassEater:
+            return ".grasseater";
+        default:
+            throw "Bad life form type!";
+    }
 }

@@ -1,11 +1,11 @@
 #include "../include/ecosystem.h"
 
-EcoSystem::EcoSystem(std::filesystem::path topDir) {
+Ecosystem::Ecosystem(std::filesystem::path topDir) {
     this->topDir = topDir;
     this->time = 0;
 }
 
-void EcoSystem::tick() {
+void Ecosystem::tick() {
     this->time++;
 
     if (this->lifeForms.size() > 0) {
@@ -15,6 +15,6 @@ void EcoSystem::tick() {
     }
 }
 
-void EcoSystem::addLifeFormToList(Life* life) {
+void Ecosystem::addLifeFormToList(Life* life) {
     this->lifeForms.push_back(life);
 }

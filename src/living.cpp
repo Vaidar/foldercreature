@@ -3,7 +3,7 @@
 */
 
 #include "../include/ecosystem.h"
-#include "../include/creature.h"
+#include "../include/grasseater.h"
 #include "../include/grass.h"
 
 // TODO: Fundera på hur strukturen ska se ut när det ska vara många varelser och växter.
@@ -11,15 +11,16 @@ int main(void) {
     std::string name = "oogabooga";
     std::string path = "./Cage/1";
     
-    EcoSystem* ecoSystem = new EcoSystem(path);
+    Ecosystem* ecosystem = new Ecosystem(path);
 
-    Creature* c = new Creature(name, path);
+    GrassEater* c = new GrassEater(name, path);
     Grass* g = new Grass("igelbigel", path);
 
-    ecoSystem->addLifeFormToList(c);
+    ecosystem->addLifeFormToList(c);
+    ecosystem->addLifeFormToList(g);
 
     for (int i = 0; i < 100; i++) {
-        ecoSystem->tick();
+        ecosystem->tick();
     }
 
     std::cout << c->getName() << " is in: " << c->getPath() << std::endl;

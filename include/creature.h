@@ -1,29 +1,35 @@
 #ifndef CREATURE
 #define CREATURE
 
-#include "../include/life.h"
+#include "life.h"
 #include <list>
 
+/**
+ * The parent class to all animal-like life forms.
+ * 
+ * Contains protected methods that all animal-like life forms
+ * needs, for example the methods move() and eat(). The move
+ * method is implemented by this class but can be overwritten
+ * if needed.
+ */
 class Creature: public Life {
-    private:
+    protected:
         std::list<std::string> nearbyFiles;
         std::list<std::string> nearbyFolders;
 
     public:
-        Creature(std::string name, std::string path);
-
+        Creature(std::string name, LifeFormType type, std::string path);
         virtual void doAction() override;
 
-    private:
+    protected:
         /**
          * Moves the creature one directory further up or down the tree.
          * The parameter destination is the name of the directory to move the creature to.
          * If the creature should move a step up the tree the destination should be "..".
          */
-        void move();
+        virtual void move();
         
-        void eat(std::string file);
-
+        virtual void eat();
         /**
          * Finds all the files and folders in the current directory
          * and adds them to the creatures lists for each type.

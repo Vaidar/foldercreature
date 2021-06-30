@@ -1,7 +1,7 @@
 #ifndef ECOSYSTEM
 #define ECOSYSTEM
 
-#include "../include/life.h"
+#include "life.h"
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -11,7 +11,7 @@
 // Ja tänker att denna klassen har regler för ekosystemet, typ högsta directoryt
 // å andra parametrar som påverkar hela systemet. Klassen life ska ha grundstenarna
 // för själva livet. Superklass till allt liv.
-class EcoSystem {
+class Ecosystem {
     private:
         // topDir represents the top of the cage, nothing outside this dir
         std::filesystem::path topDir;
@@ -19,7 +19,7 @@ class EcoSystem {
         std::list<Life*> lifeForms;
 
     public:
-        EcoSystem(std::filesystem::path topDir);
+        Ecosystem(std::filesystem::path topDir);
 
         /**
          * The method for moving the ecosystem forward by one tick (1 time unit).

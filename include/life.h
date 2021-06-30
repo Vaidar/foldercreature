@@ -8,13 +8,20 @@
 
 class Life {
     protected:
+        typedef enum {
+            Grass,
+            GrassEater
+        } LifeFormType;
+
         std::string name;
+        LifeFormType type;
         std::filesystem::path currentDir;
         std::filesystem::path fullPath;
         std::fstream self;
 
     public:
-        Life(std::string name, std::filesystem::path path);
+        Life(std::string name, LifeFormType type, std::filesystem::path path);
+
         std::string getName();
         std::string getPath();
 
@@ -38,6 +45,15 @@ class Life {
          * Kills the creature. Closes the fstream and removes the file. 
          */
         void kill();
+    
+    protected:
+        /**
+         * Returns the file extension for this life forms type. Example: If this
+         * lifeform is of the type grass the method returns ".grass".
+         * 
+         * @return The file extenstion for the 
+         */
+        std::string getFileExtensionFromLifeFormType();
 };
 
 #endif

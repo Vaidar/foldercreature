@@ -1,9 +1,12 @@
 #ifndef GRASS
 #define GRASS
 
-#include "../include/life.h"
+#include "life.h"
 
 class Grass: public Life {
+    private:
+        int grassLimit;
+
     public:
         Grass(std::string name, std::string path);
 
