@@ -20,6 +20,10 @@ std::string Life::getName() {
     return this->name;
 }
 
+Life::LifeFormType Life::getType() {
+    return this->type;
+}
+
 std::string Life::getPath() {
     return this->currentDir.string();
 }
@@ -75,4 +79,20 @@ std::string Life::getFileExtensionFromLifeFormType() {
 
 bool Life::checkIfDead() {
     return !this->self.is_open();
+}
+
+void Life::getNearbyFilesAndFolders() {
+    std::string tempName = this->name;
+    tempName.append(getFileExtensionFromLifeFormType());
+
+    for (const auto & entry : std::filesystem::directory_iterator(this->currentDir)) {        
+        if (entry.is_directory()) {
+            this->nearbyFolders.push_back(entry.path().string());
+        } else {
+            // Dont add self
+            if (entry.path().filename().compare(tempName) != 0) {
+                this->nearbyFiles.push_back(entry.path().string());
+            }
+        }
+    }
 }

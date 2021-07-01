@@ -1,4 +1,6 @@
 #include "../include/ecosystem.h"
+#include "../include/grass.h"
+#include "../include/grasseater.h"
 
 Ecosystem::Ecosystem(std::filesystem::path topDir) {
     this->topDir = topDir;
@@ -14,6 +16,9 @@ void Ecosystem::tick() {
 
             switch (value) {
                 case 0:
+                    break;
+                case 1:
+                    createNewLifeForm(*it);
                     break;
                 case -1:
                     removeLifeFormFromList(*it);
@@ -37,4 +42,25 @@ void Ecosystem::addLifeFormToList(Life* life) {
 
 void Ecosystem::removeLifeFormFromList(Life* life) {
     this->lifeForms.remove(life);
+}
+
+void Ecosystem::createNewLifeForm(Life* parent) {
+    std::string childName = std::to_string(rand());
+    //childName.append(std::to_string(rand()));
+
+    Life* child;
+
+    switch (parent->getType()) {
+        case Life::LifeFormType::Grass:
+            child = new Grass(childName, parent->getPath());
+            break;
+        case Life::LifeFormType::GrassEater:
+            child = new GrassEater(childName, parent->getPath());
+            break;
+        default:
+            throw parent->getName() + " tried to create unknown lifeform type.";
+            return;
+    }
+
+    addLifeFormToList(child);
 }

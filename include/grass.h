@@ -12,7 +12,7 @@ class Grass: public Life {
 
     private:
         virtual int doAction() override;
-        void reproduce();
+        bool reproduce();
 };
 
 #endif

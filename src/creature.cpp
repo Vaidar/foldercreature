@@ -19,12 +19,12 @@ int Creature::doAction() {
 }
 
 void Creature::move() { // TODO: Flytta över mesta av koden här till ny fysik/filehandler klass.
-    this->self.close();
     std::string destination = chooseNewDestination();
     if (destination == "") {
         return;
     }
 
+    this->self.close();
     // Get the path to the new directory
     std::string newFullPath = getNewPath(this->currentDir, destination);
     this->currentDir = newFullPath;
@@ -54,22 +54,6 @@ void Creature::eat() {
 
 void Creature::devourFile(std::string file) {
     remove(file.c_str());
-}
-
-void Creature::getNearbyFilesAndFolders() {
-    std::string tempName = this->name;
-    tempName.append(getFileExtensionFromLifeFormType());
-
-    for (const auto & entry : std::filesystem::directory_iterator(this->currentDir)) {        
-        if (entry.is_directory()) {
-            this->nearbyFolders.push_back(entry.path().string());
-        } else {
-            // Dont add self
-            if (entry.path().filename().compare(tempName) != 0) {
-                this->nearbyFiles.push_back(entry.path().string());
-            }
-        }
-    }
 }
 
 std::string Creature::chooseNewDestination() {

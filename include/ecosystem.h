@@ -39,6 +39,9 @@ class Ecosystem {
          */
         void addLifeFormToList(Life* life);
         void removeLifeFormFromList(Life* life);
+
+    private:
+        void createNewLifeForm(Life* parent);
 };
 
 #endif

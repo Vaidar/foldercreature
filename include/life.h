@@ -5,24 +5,30 @@
 #include <fstream>
 #include <string>
 #include <filesystem>
+#include <list>
 
 class Life {
-    protected:
+    public:
         typedef enum {
             Grass,
             GrassEater
         } LifeFormType;
 
+    protected:
         std::string name;
         LifeFormType type;
         std::filesystem::path currentDir;
         std::filesystem::path fullPath;
         std::fstream self;
 
+        std::list<std::string> nearbyFiles;
+        std::list<std::string> nearbyFolders;
+
     public:
         Life(std::string name, LifeFormType type, std::filesystem::path path);
 
         std::string getName();
+        LifeFormType getType();
         std::string getPath();
 
         /**
@@ -62,6 +68,12 @@ class Life {
          * @return True if fstream closed, else true.
          */
         bool checkIfDead();
+
+        /**
+         * Finds all the files and folders in the current directory
+         * and adds them to the creatures lists for each type.
+         */
+        void getNearbyFilesAndFolders();
 };
 
 #endif

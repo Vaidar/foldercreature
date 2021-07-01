@@ -2,7 +2,6 @@
 #define CREATURE
 
 #include "life.h"
-#include <list>
 
 /**
  * The parent class to all animal-like life forms.
@@ -13,10 +12,6 @@
  * if needed.
  */
 class Creature: public Life {
-    protected:
-        std::list<std::string> nearbyFiles;
-        std::list<std::string> nearbyFolders;
-
     public:
         Creature(std::string name, LifeFormType type, std::string path);
         virtual int doAction() override;
@@ -31,11 +26,6 @@ class Creature: public Life {
         
         virtual void eat();
         void devourFile(std::string file);
-        /**
-         * Finds all the files and folders in the current directory
-         * and adds them to the creatures lists for each type.
-         */
-        void getNearbyFilesAndFolders();
 
         /**
          * Randomly selects neighbouring directory to move the creature to inside its cage.

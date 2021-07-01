@@ -11,13 +11,20 @@ int Grass::doAction() {
         return -1;
     }
 
-    this->reproduce();
+    getNearbyFilesAndFolders();
+    if (this->nearbyFiles.size() < 20) {
+        if (this->reproduce()) {
+            return 1;
+        }
+    }
 
     return 0;
 }
 
-void Grass::reproduce() {
-    Grass* newGrass = new Grass("test", this->currentDir);
+bool Grass::reproduce() {
+    //Grass* newGrass = new Grass(std::to_string(rand()), this->currentDir);
+
+    return true;
     
     // Detta funkar men måste kalla på Ecosystem.addToList(). Hur gör ja det?
     // Äre ok att includea ecosystem.h bara för detta?
