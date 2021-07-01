@@ -4,10 +4,16 @@ GrassEater::GrassEater(std::string name, std::string path) : Creature(name, Life
 
 }
 
-void GrassEater::doAction() {
-    std::cout << "Grasseater override!!!" << std::endl;
+int GrassEater::doAction() {
+    if (checkIfDead()) {
+        return -1;
+    }
+
+    std::cout << this->currentDir << std::endl;
     this->move();
     this->eat();
+
+    return 0;
 }
 
 void GrassEater::eat() {
@@ -16,11 +22,8 @@ void GrassEater::eat() {
     for (auto const& i : nearbyFiles) {
         size_t test = i.find_last_of(".");
         if (i.substr(test + 1) == "grass") {
-            // Detta funkar men hur ska den här klassen kunna ta bort gräset?
-            
-            // Jag har ju pathen till filen som ska bort men instansen av klassen gräs som
-            // är kopplad till denna gräsfil måste också försvinna. Hur?
-
+            devourFile(i);
+            this->self << "Ate: " << i << std::endl;
             break; // Only eat one grass
         }
     }

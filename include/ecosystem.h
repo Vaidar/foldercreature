@@ -28,11 +28,17 @@ class Ecosystem {
         void tick();
 
         /**
+         * Returns the current time. The time is the amount of ticks that has occurred.
+         */
+        int getTime();
+
+        /**
          * Adds the given life form to the lifeForms list.
          * 
          * @param life Pointer to the life form to add to the list.
          */
         void addLifeFormToList(Life* life);
+        void removeLifeFormFromList(Life* life);
 };
 
 #endif

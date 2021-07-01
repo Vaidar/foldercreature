@@ -11,7 +11,8 @@ class Grass: public Life {
         Grass(std::string name, std::string path);
 
     private:
-        virtual void doAction() override;
+        virtual int doAction() override;
+        void reproduce();
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include "../include/life.h"
-#include "../include/ecosystem.h"
 
 Life::Life(std::string name, LifeFormType type, std::filesystem::path path) {
     this->name = name;
@@ -26,8 +25,13 @@ std::string Life::getPath() {
 }
 
 // Override this method in all life subclasses.
-void Life::doAction() {
-    std::cout << this->name << " did its action." << std::endl;
+int Life::doAction() {
+    if (checkIfDead()) {
+        return -1;
+    }
+
+    throw "doAction called in base class. Not good.";
+    return 0;
 }
 
 std::string Life::getNewPath(std::filesystem::path origin, std::string destination) {
@@ -67,4 +71,8 @@ std::string Life::getFileExtensionFromLifeFormType() {
         default:
             throw "Bad life form type!";
     }
+}
+
+bool Life::checkIfDead() {
+    return !this->self.is_open();
 }

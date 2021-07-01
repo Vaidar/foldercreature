@@ -29,7 +29,7 @@ class Life {
          * This method is run on every life form every tick in the ecosystem.
          * The method should be overwritten to suit every life forms personal needs.
          */
-        virtual void doAction();
+        virtual int doAction();
 
         /**
          * Returns the path to the destination given. Destination is either a foldername or "..".
@@ -54,6 +54,14 @@ class Life {
          * @return The file extenstion for the 
          */
         std::string getFileExtensionFromLifeFormType();
+
+        /**
+         * Checks if the the lifeforms fstream still is open. If it isn't the lifeform died.
+         * Should be called at the top of the lifeforms doAction().
+         * 
+         * @return True if fstream closed, else true.
+         */
+        bool checkIfDead();
 };
 
 #endif

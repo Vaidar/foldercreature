@@ -19,7 +19,7 @@ class Creature: public Life {
 
     public:
         Creature(std::string name, LifeFormType type, std::string path);
-        virtual void doAction() override;
+        virtual int doAction() override;
 
     protected:
         /**
@@ -30,6 +30,7 @@ class Creature: public Life {
         virtual void move();
         
         virtual void eat();
+        void devourFile(std::string file);
         /**
          * Finds all the files and folders in the current directory
          * and adds them to the creatures lists for each type.

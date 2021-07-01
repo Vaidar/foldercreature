@@ -6,7 +6,7 @@
 class GrassEater: public Creature {
     public:
         GrassEater(std::string name, std::string path);
-        virtual void doAction() override;
+        virtual int doAction() override;
 
     protected:
         virtual void eat() override;

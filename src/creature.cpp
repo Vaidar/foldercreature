@@ -8,9 +8,14 @@ Creature::Creature(std::string name, LifeFormType type, std::string path) : Life
     srand(time(NULL));
 }
 
-void Creature::doAction() {
+int Creature::doAction() {
+    if (checkIfDead()) {
+        return -1;
+    }
+
     std::cout << "Creature override!!!" << std::endl;
     this->move();
+    return 0;
 }
 
 void Creature::move() { // TODO: Flytta över mesta av koden här till ny fysik/filehandler klass.
@@ -47,7 +52,10 @@ void Creature::eat() {
     throw "Override Creature::eat()";
 }
 
-// TODO: Den här verkar hårdkodad efter .creature. Fixa det!
+void Creature::devourFile(std::string file) {
+    remove(file.c_str());
+}
+
 void Creature::getNearbyFilesAndFolders() {
     std::string tempName = this->name;
     tempName.append(getFileExtensionFromLifeFormType());
