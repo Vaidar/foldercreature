@@ -14,14 +14,15 @@ int main(void) {
     
     Ecosystem* ecosystem = new Ecosystem(path);
 
-    GrassEater* c = new GrassEater(name, path);
-    Grass* g = new Grass("igelbigel", path);
+    GrassEater* c = new GrassEater(name, path, 0);
+    Grass* g = new Grass("igelbigel", path, 0);
 
     ecosystem->addLifeFormToList(c);
     ecosystem->addLifeFormToList(g);
 
     for (int i = 0; i < 100; i++) {
         ecosystem->tick();
+        sleep(1);
     }
 
     std::cout << c->getName() << " is in: " << c->getPath() << std::endl;

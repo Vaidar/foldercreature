@@ -37,9 +37,14 @@ int Life::doAction(int time) {
     this->timeAlive++;
 
     if (isCoolDownOver(time)) {
-        doSpecificActions();
         this->lastActionTime = time;
-    }    
+
+        // This value can be changed in doSpecificActions() if you want another cooldowntime.
+        this->actionCoolDownTime = rand() % 10;
+        return doSpecificActions();
+    } else {
+        return 0;
+    }
 }
 
 std::string Life::getNewPath(std::filesystem::path origin, std::string destination) {

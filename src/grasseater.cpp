@@ -8,10 +8,16 @@ int GrassEater::doSpecificActions() {
     if (checkIfDead()) {
         return -1;
     }
+    
+    this->actionCoolDownTime = rand() % 2;
 
     std::cout << this->currentDir << std::endl;
     this->move();
     this->eat();
+
+    if (rand() % 10 <= 3) { // TODO: fixa den här. Den reproducear bra men leder till krasher snabbt.
+        return 1;
+    }
 
     return 0;
 }
