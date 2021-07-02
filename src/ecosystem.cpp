@@ -8,12 +8,11 @@ Ecosystem::Ecosystem(std::filesystem::path topDir) {
 }
 
 void Ecosystem::tick() {
-    this->time++;
-
     if (this->lifeForms.size() > 0) {
         for (std::list<Life*>::iterator it = this->lifeForms.begin(); it != this->lifeForms.end(); ++it){
-            int value = (*it)->doAction();
+            int value = (*it)->doAction(this->time);
 
+            // Depending on what doAction returned, do things.
             switch (value) {
                 case 0:
                     break;
@@ -30,6 +29,8 @@ void Ecosystem::tick() {
             }
         }
     }
+
+    this->time++;
 }
 
 int Ecosystem::getTime() {
@@ -52,10 +53,10 @@ void Ecosystem::createNewLifeForm(Life* parent) {
 
     switch (parent->getType()) {
         case Life::LifeFormType::Grass:
-            child = new Grass(childName, parent->getPath());
+            child = new Grass(childName, parent->getPath(), this->time);
             break;
         case Life::LifeFormType::GrassEater:
-            child = new GrassEater(childName, parent->getPath());
+            child = new GrassEater(childName, parent->getPath(), this->time);
             break;
         default:
             throw parent->getName() + " tried to create unknown lifeform type.";

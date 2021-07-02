@@ -1,6 +1,6 @@
 #include "../include/creature.h"
 
-Creature::Creature(std::string name, LifeFormType type, std::string path) : Life(name, type, path) {
+Creature::Creature(std::string name, LifeFormType type, std::string path, int birthTime) : Life(name, type, path, birthTime) {
     this->self << this->name << std::endl;
     this->self << this->currentDir << std::endl;
 
@@ -8,7 +8,7 @@ Creature::Creature(std::string name, LifeFormType type, std::string path) : Life
     srand(time(NULL));
 }
 
-int Creature::doAction() {
+int Creature::doSpecificActions() {
     if (checkIfDead()) {
         return -1;
     }

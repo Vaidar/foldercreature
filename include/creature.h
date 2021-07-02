@@ -13,8 +13,8 @@
  */
 class Creature: public Life {
     public:
-        Creature(std::string name, LifeFormType type, std::string path);
-        virtual int doAction() override;
+        Creature(std::string name, LifeFormType type, std::string path, int birthTime);
+        virtual int doSpecificActions() override;
 
     protected:
         /**

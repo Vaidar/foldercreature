@@ -1,12 +1,12 @@
 #include "../include/grass.h"
 #include "../include/ecosystem.h"
 
-Grass::Grass(std::string name, std::string path) : Life(name, LifeFormType::Grass, path) {
+Grass::Grass(std::string name, std::string path, int birthTime) : Life(name, LifeFormType::Grass, path, birthTime) {
     this->self << this->name << std::endl;
     this->self << this->currentDir << std::endl;
 }
 
-int Grass::doAction() {
+int Grass::doSpecificActions() {
     if (checkIfDead()) {
         return -1;
     }
@@ -33,5 +33,5 @@ bool Grass::reproduce() {
     // Hur ska detta gå till? Det ska inte bara skapas en ny fil utan det ska
     // skapas en ny instans av Grass klassen.
 
-    // Kanske göra så att doAction() returnerar något när det ska bli en till.
+    // Kanske göra så att doSpecificActions() returnerar något när det ska bli en till.
 }

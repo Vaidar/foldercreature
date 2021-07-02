@@ -23,7 +23,7 @@ class Ecosystem {
 
         /**
          * The method for moving the ecosystem forward by one tick (1 time unit).
-         * Runs the doAction() method on every life form in the lifeForms list.
+         * Runs the doSpecificActions() method on every life form in the lifeForms list.
          */
         void tick();
 

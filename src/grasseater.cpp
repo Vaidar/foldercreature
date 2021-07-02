@@ -1,10 +1,10 @@
 #include "../include/grasseater.h"
 
-GrassEater::GrassEater(std::string name, std::string path) : Creature(name, LifeFormType::GrassEater, path) {
+GrassEater::GrassEater(std::string name, std::string path, int birthTime) : Creature(name, LifeFormType::GrassEater, path, birthTime) {
 
 }
 
-int GrassEater::doAction() {
+int GrassEater::doSpecificActions() {
     if (checkIfDead()) {
         return -1;
     }

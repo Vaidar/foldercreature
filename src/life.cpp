@@ -1,9 +1,10 @@
 #include "../include/life.h"
 
-Life::Life(std::string name, LifeFormType type, std::filesystem::path path) {
+Life::Life(std::string name, LifeFormType type, std::filesystem::path path, int birthTime) {
     this->name = name;
     this->type = type;
     this->currentDir = path;
+    this->birthTime = birthTime;
 
     std::string temp = path;
     std::string fileExtension = getFileExtensionFromLifeFormType();
@@ -28,14 +29,17 @@ std::string Life::getPath() {
     return this->currentDir.string();
 }
 
-// Override this method in all life subclasses.
-int Life::doAction() {
-    if (checkIfDead()) {
-        return -1;
-    }
+bool Life::isCoolDownOver(int currentTime) {
+    return (currentTime - this->lastActionTime) >= this->actionCoolDownTime;
+}
 
-    throw "doAction called in base class. Not good.";
-    return 0;
+int Life::doAction(int time) {
+    this->timeAlive++;
+
+    if (isCoolDownOver(time)) {
+        doSpecificActions();
+        this->lastActionTime = time;
+    }    
 }
 
 std::string Life::getNewPath(std::filesystem::path origin, std::string destination) {
@@ -64,6 +68,16 @@ void Life::kill() {
     this->self.close();
     std::string temp = this->fullPath.string(); // BUG: Varför krävs det här mellansteget wtf
     remove(temp.c_str());
+}
+
+// Override this method in all life subclasses.
+int Life::doSpecificActions() {
+    if (checkIfDead()) {
+        return -1;
+    }
+
+    throw "doSpecificActions called in base class. Not good.";
+    return 0;
 }
 
 std::string Life::getFileExtensionFromLifeFormType() {

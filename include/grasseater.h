@@ -5,8 +5,8 @@
 
 class GrassEater: public Creature {
     public:
-        GrassEater(std::string name, std::string path);
-        virtual int doAction() override;
+        GrassEater(std::string name, std::string path, int birthTime);
+        virtual int doSpecificActions() override;
 
     protected:
         virtual void eat() override;

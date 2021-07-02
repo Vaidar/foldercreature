@@ -23,19 +23,30 @@ class Life {
 
         std::list<std::string> nearbyFiles;
         std::list<std::string> nearbyFolders;
+        
+        int birthTime;
+        int timeAlive; // Increase this every tick
+        int actionCoolDownTime;
+
+    private:
+        int lastActionTime;
 
     public:
-        Life(std::string name, LifeFormType type, std::filesystem::path path);
+        Life(std::string name, LifeFormType type, std::filesystem::path path, int birthTime);
 
         std::string getName();
         LifeFormType getType();
         std::string getPath();
+        bool isCoolDownOver(int currentTime);
 
         /**
-         * This method is run on every life form every tick in the ecosystem.
-         * The method should be overwritten to suit every life forms personal needs.
+         * This method should be called on every lifeform every tick.
+         * 
+         * @param time The time (tick) when the method was called.
+         * @return 0 if everything went correctly. 1 if the lifeform will reproduce.
+         *         -1 if the lifeform has died.
          */
-        virtual int doAction();
+        int doAction(int time);
 
         /**
          * Returns the path to the destination given. Destination is either a foldername or "..".
@@ -54,6 +65,15 @@ class Life {
     
     protected:
         /**
+         * This method is called from the doAction method.The method should be overwritten 
+         * to suit every lifeforms personal needs.
+         * 
+         * @return 0 if everything went correctly. 1 if the lifeform will reproduce.
+         *         -1 if the lifeform has died. 
+         */
+        virtual int doSpecificActions(); // TODO: Ge den här ett bra namn!
+
+        /**
          * Returns the file extension for this life forms type. Example: If this
          * lifeform is of the type grass the method returns ".grass".
          * 
@@ -63,7 +83,7 @@ class Life {
 
         /**
          * Checks if the the lifeforms fstream still is open. If it isn't the lifeform died.
-         * Should be called at the top of the lifeforms doAction().
+         * Should be called at the top of the lifeforms doSpecificActions().
          * 
          * @return True if fstream closed, else true.
          */

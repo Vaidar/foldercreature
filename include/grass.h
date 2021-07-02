@@ -8,10 +8,10 @@ class Grass: public Life {
         int grassLimit;
 
     public:
-        Grass(std::string name, std::string path);
+        Grass(std::string name, std::string path, int birthTime);
 
     private:
-        virtual int doAction() override;
+        virtual int doSpecificActions() override;
         bool reproduce();
 };
 

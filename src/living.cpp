@@ -2,6 +2,7 @@
  * This the file that will run the ecosystem
 */
 
+#include <unistd.h>
 #include "../include/ecosystem.h"
 #include "../include/grasseater.h"
 #include "../include/grass.h"
